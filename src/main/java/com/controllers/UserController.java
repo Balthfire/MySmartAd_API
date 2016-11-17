@@ -52,7 +52,7 @@ public class UserController {
      * @param pseudo, pass
      * @return
      */
-
+/*
     @RequestMapping(method = RequestMethod.POST,params = {"pseudo","name","lastname","pass","email","address","typeuser"} )
     public @ResponseBody ResponseEntity<?> addUser(
             @RequestParam(value ="pseudo") String pseudo,
@@ -74,7 +74,7 @@ public class UserController {
             return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
         }
     }
-
+*/
     @RequestMapping(method = RequestMethod.GET,params = {"pseudo","pass"} )
     public @ResponseBody ResponseEntity<?> getUserWithIdAndPass(
             @RequestParam(value ="pseudo") String pseudo,
