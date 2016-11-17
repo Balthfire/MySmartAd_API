@@ -10,8 +10,7 @@ import java.util.List;
 @Entity
 @Table(name="Type_Place")
 public class Type_Place {
-
-
+    
     @Id
     //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_place")
@@ -22,4 +21,26 @@ public class Type_Place {
     @OneToMany(mappedBy = "type_place", cascade = CascadeType.ALL)
     private List<Place> Places;
 
+    public Type_Place() {
+    }
+
+    public Type_Place(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public List<Place> getPlaces() {
+        return Places;
+    }
+
+    public void setPlaces(List<Place> places) {
+        Places = places;
+    }
 }

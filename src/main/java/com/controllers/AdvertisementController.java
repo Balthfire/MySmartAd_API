@@ -27,7 +27,7 @@ public class AdvertisementController {
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody
-    ResponseEntity<?> getAllUsers() {
+    ResponseEntity<?> getAllAds() {
         try{
             return new ResponseEntity<>(AdRepo.findAll(), HttpStatus.OK);
         }
@@ -43,14 +43,17 @@ public class AdvertisementController {
      * @return
      */
 
-    @RequestMapping(method = RequestMethod.POST,params = {"name","idclient"} )
-    public @ResponseBody ResponseEntity<?> addUser(
+    @RequestMapping(method = RequestMethod.POST,params = {"name","idclient","heigth","length","price"} )
+    public @ResponseBody ResponseEntity<?> addAd(
             @RequestParam(value ="name") String name,
-            @RequestParam(value ="idclient") int idclient)
+            @RequestParam(value ="idclient") int idclient,
+            @RequestParam(value ="idclient") double heigth,
+            @RequestParam(value ="idclient") double length,
+            @RequestParam(value ="idclient") double price)
     {
         try{
             Client client = ClientRepo.findOne(idclient);
-            Advertisement newad = new Advertisement(name,client);
+            Advertisement newad = new Advertisement(name,client,heigth,length,price);
             return new ResponseEntity<>(AdRepo.save(newad),HttpStatus.OK);
         }
         catch (Exception e)
@@ -60,7 +63,7 @@ public class AdvertisementController {
     }
 
     @RequestMapping(method = RequestMethod.GET,params = {"idAd"} )
-    public @ResponseBody ResponseEntity<?> getUserWithIdAndPass(
+    public @ResponseBody ResponseEntity<?> getOneAd(
             @RequestParam(value ="idAd") int idAd)
     {
         try{
@@ -73,7 +76,7 @@ public class AdvertisementController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE,params = {"idAd"} )
-    public @ResponseBody ResponseEntity<?> DeleteUser(
+    public @ResponseBody ResponseEntity<?> DeleteAd(
             @RequestParam(value="idAd") int idAd)
     {
         ResponseEntity<String> response = null;

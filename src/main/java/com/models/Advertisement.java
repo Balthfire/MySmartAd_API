@@ -21,6 +21,15 @@ public class Advertisement {
     @NotNull
     @Column(name = "image")
     private String image;
+    @NotNull
+    @Column(name = "height")
+    private double height;
+    @NotNull
+    @Column(name = "length")
+    private double length;
+    @NotNull
+    @Column(name = "price")
+    private double price;
 
     @ManyToOne
     @JoinColumn(name = "id_client")
@@ -37,10 +46,39 @@ public class Advertisement {
     public Advertisement() {
     }
 
-    public Advertisement(String name, Client client) {
+    public Advertisement(String name,Client client, double height, double length, double price) {
         this.name = name;
+        this.height = height;
+        this.length = length;
+        this.price = price;
         this.client = client;
     }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeigth(double height) {
+        this.height = height;
+    }
+
+    public double getLength() {
+        return length;
+    }
+
+    public void setLength(double length) {
+        this.length = length;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+
 
     public String getName() {
         return name;

@@ -34,5 +34,32 @@ public class Place {
             inverseJoinColumns = @JoinColumn(name = "id_ad", referencedColumnName = "id_ad"))
     private List<Advertisement> ads;
 
+    public Place() {
+    }
 
+    public Place(double note, double longitude, Type_Place type_place) {
+        this.note = note;
+        this.longitude = longitude;
+        this.type_place = type_place;
+    }
+
+    public double getNote() {
+        return note;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getVisibility_note() {
+        return visibility_note;
+    }
+
+    public Type_Place getType_place() {
+        return type_place;
+    }
+
+    public List<Advertisement> getAds() {
+        return ads;
+    }
 }
