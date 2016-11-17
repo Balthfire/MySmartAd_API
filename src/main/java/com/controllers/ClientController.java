@@ -1,9 +1,6 @@
 package com.controllers;
 
-import com.models.Advertisement;
-import com.models.Client;
-import com.models.Place;
-import com.models.typePlace;
+import com.models.*;
 import com.repositories.AdvertisementRepository;
 import com.repositories.ClientRepository;
 import com.repositories.PlaceRepository;
@@ -48,7 +45,7 @@ public class ClientController {
             return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
         }
     }
-
+/*
     @RequestMapping(method = RequestMethod.POST,params = {"name","address","city","zipcode","telephone","website"} )
     public @ResponseBody ResponseEntity<?> addTypePlace(
             @RequestParam(value ="name") String name,
@@ -65,6 +62,19 @@ public class ClientController {
         catch (Exception e)
         {
             return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
+        }
+    }
+*/
+    @RequestMapping(method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<?> addClient(
+            @RequestBody ClientRequest c)
+    {
+        try{
+            Client leclient = new Client(c.getName(),c.getAddress(),c.getCity(),c.getZipcode(),c.getTelephone(),c.getWebsite());
+            ClientRepo.save(leclient);
+            return new ResponseEntity<String>(HttpStatus.CREATED);
+        }catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_IMPLEMENTED);
         }
     }
 

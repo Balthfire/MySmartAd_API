@@ -1,6 +1,7 @@
 package com.controllers;
 
 import com.models.Place;
+import com.models.PlaceRequest;
 import com.models.typePlace;
 import com.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +39,7 @@ public class PlaceController {
         }
     }
 
-    /**
-     * Récupération d'un user avec son ID
-     * @param latitude, longitude, idtypeplace
-     * @return
-     */
-
+    /*
     @RequestMapping(method = RequestMethod.POST,params = {"latitude","longitude","idtypeplace"} )
     public @ResponseBody ResponseEntity<?> addPlace(
             @RequestParam(value ="latitude") double latitude,
@@ -58,6 +54,20 @@ public class PlaceController {
         catch (Exception e)
         {
             return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
+        }
+    }*/
+
+    @RequestMapping(method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<?> addClient(
+            @RequestBody PlaceRequest p)
+    {
+        try{
+            typePlace tp = TypePlaceRepo.findOne(p.getType_place());
+            Place laplace = new Place(p.getLatitude(),p.getLongitude(),tp,0);
+            PlaceRepo.save(laplace);
+            return new ResponseEntity<String>(HttpStatus.CREATED);
+        }catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_IMPLEMENTED);
         }
     }
 

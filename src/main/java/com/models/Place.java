@@ -39,10 +39,11 @@ public class Place {
     public Place() {
     }
 
-    public Place(double latitude, double longitude, typePlace type_place) {
+    public Place(double latitude, double longitude, typePlace type_place, double visibility_note) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.type_place = type_place;
+        this.visibility_note = visibility_note;
     }
 
     public double getLongitude() {
