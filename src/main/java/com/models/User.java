@@ -108,6 +108,7 @@ public class User {
         this.email = email;
     }
 
+    @JsonBackReference
     public List<Client> getClients() {
         return clients;
     }
@@ -124,6 +125,7 @@ public class User {
         this.type_user = type_user;
     }
 
+    @JsonBackReference
     public List<Commentary> getCommentaries() {
         return commentaries;
     }

@@ -20,4 +20,27 @@ public class Type_User {
     private String libelle;
     @OneToMany(mappedBy = "type_user", cascade = CascadeType.ALL)
     private List<User> Users;
+
+    public Type_User() {
+    }
+
+    public Type_User(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public List<User> getUsers() {
+        return Users;
+    }
+
+    public void setUsers(List<User> users) {
+        Users = users;
+    }
 }

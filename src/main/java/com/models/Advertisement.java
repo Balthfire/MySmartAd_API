@@ -1,5 +1,7 @@
 package com.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -46,8 +48,19 @@ public class Advertisement {
     public Advertisement() {
     }
 
-    public Advertisement(String name,Client client, double height, double length, double price) {
+    public Advertisement(String name,Client client, String image, double height, double length, double price) {
         this.name = name;
+        this.height = height;
+        this.length = length;
+        this.price = price;
+        this.client = client;
+        this.image = image;
+    }
+
+    public Advertisement(int idad, String name,Client client, double height, double length, double price) {
+        this.idad = idad;
+        this.name = name;
+        this.image = image;
         this.height = height;
         this.length = length;
         this.price = price;
@@ -78,8 +91,6 @@ public class Advertisement {
         this.price = price;
     }
 
-
-
     public String getName() {
         return name;
     }
@@ -104,6 +115,7 @@ public class Advertisement {
         this.client = client;
     }
 
+    @JsonBackReference
     public List<Place> getPlaces() {
         return places;
     }
@@ -112,9 +124,11 @@ public class Advertisement {
         this.places = places;
     }
 
+    @JsonBackReference
     public List<Commentary> getCommentaries() {
         return commentaries;
     }
+
 
     public void setCommentaries(List<Commentary> commentaries) {
         this.commentaries = commentaries;

@@ -1,9 +1,7 @@
 package com.controllers;
 
-import com.models.Advertisement;
-import com.models.Client;
 import com.models.Place;
-import com.models.Type_Place;
+import com.models.typePlace;
 import com.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,7 +51,7 @@ public class PlaceController {
             @RequestParam(value ="idtypeplace") int idtypeplace)
     {
         try{
-            Type_Place typeplace = TypePlaceRepo.findOne(idtypeplace);
+            typePlace typeplace = TypePlaceRepo.findOne(idtypeplace);
             Place newplace = new Place(latitude,longitude,typeplace);
             return new ResponseEntity<>(PlaceRepo.save(newplace),HttpStatus.OK);
         }

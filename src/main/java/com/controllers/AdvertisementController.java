@@ -39,28 +39,25 @@ public class AdvertisementController {
 
     /**
      * Récupération d'un user avec son ID
-     * @param name, idclient
+     * @param
      * @return
      */
 
-    @RequestMapping(method = RequestMethod.POST,params = {"name","idclient","heigth","length","price"} )
+    @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<?> addAd(
-            @RequestParam(value ="name") String name,
-            @RequestParam(value ="idclient") int idclient,
-            @RequestParam(value ="idclient") double heigth,
-            @RequestParam(value ="idclient") double length,
-            @RequestParam(value ="idclient") double price)
+            @RequestBody AdvertisementRequest AdRequest)
     {
         try{
-            Client client = ClientRepo.findOne(idclient);
-            Advertisement newad = new Advertisement(name,client,heigth,length,price);
-            return new ResponseEntity<>(AdRepo.save(newad),HttpStatus.OK);
-        }
-        catch (Exception e)
-        {
-            return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
+            Client client = ClientRepo.findOne(AdRequest.getIdClient());
+            Advertisement newad = new Advertisement(AdRequest.getName(),client,"imagetagranmère",AdRequest.getHeight(),AdRequest.getLength(),AdRequest.getPrice());
+
+            AdRepo.save(newad);
+            return new ResponseEntity<String>(HttpStatus.CREATED);
+        }catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_IMPLEMENTED);
         }
     }
+
 
     @RequestMapping(method = RequestMethod.GET,params = {"idAd"} )
     public @ResponseBody ResponseEntity<?> getOneAd(

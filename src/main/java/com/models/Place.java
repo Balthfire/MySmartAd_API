@@ -1,5 +1,7 @@
 package com.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -18,7 +20,7 @@ public class Place {
     private int idplace;
     @NotNull
     @Column(name = "latitude")
-    private double note;
+    private double latitude;
     @NotNull
     @Column(name = "longitude")
     private double longitude;
@@ -28,7 +30,7 @@ public class Place {
 
     @ManyToOne
     @JoinColumn(name = "id_type_place")
-    private Type_Place type_place;
+    private typePlace type_place;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Interaction", joinColumns = @JoinColumn(name = "id_place", referencedColumnName = "id_place"),
             inverseJoinColumns = @JoinColumn(name = "id_ad", referencedColumnName = "id_ad"))
@@ -37,28 +39,49 @@ public class Place {
     public Place() {
     }
 
-    public Place(double note, double longitude, Type_Place type_place) {
-        this.note = note;
+    public Place(double latitude, double longitude, typePlace type_place) {
+        this.latitude = latitude;
         this.longitude = longitude;
         this.type_place = type_place;
-    }
-
-    public double getNote() {
-        return note;
     }
 
     public double getLongitude() {
         return longitude;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setVisibility_note(double visibility_note) {
+        this.visibility_note = visibility_note;
+    }
+
+    public void setType_place(typePlace type_place) {
+        this.type_place = type_place;
+    }
+
+    public void setAds(List<Advertisement> ads) {
+        this.ads = ads;
+    }
+
     public double getVisibility_note() {
         return visibility_note;
     }
 
-    public Type_Place getType_place() {
+    public typePlace getType_place() {
         return type_place;
     }
 
+    @JsonBackReference
     public List<Advertisement> getAds() {
         return ads;
     }

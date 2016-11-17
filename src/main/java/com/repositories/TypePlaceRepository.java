@@ -1,11 +1,13 @@
 package com.repositories;
 
-import com.models.Type_Place;
+import com.models.typePlace;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by Menerith on 16/11/2016.
  */
-public interface TypePlaceRepository  extends CrudRepository<Type_Place, Integer>{
+@Transactional
+public interface TypePlaceRepository  extends CrudRepository<typePlace, Integer>{
 
 }
