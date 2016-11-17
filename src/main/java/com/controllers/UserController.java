@@ -1,5 +1,8 @@
 package com.controllers;
 
+import com.models.Type_User;
+import com.models.User;
+import com.repositories.TypeUserRepository;
 import com.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +23,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
     @Autowired
     private UserRepository UserRepo;
+    @Autowired
+    private TypeUserRepository TypeUserRepo;
 
 
     @RequestMapping(method = RequestMethod.GET)
@@ -37,14 +43,25 @@ public class UserController {
     }
 
     /**
-     * Récupération d'un bar avec son ID
-     * @param idbar
+     * Récupération d'un user avec son ID
+     * @param pseudo, pass
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/{idbar}")
-    public @ResponseBody ResponseEntity<?> getBarWithId(@PathVariable int idbar) {
+
+    @RequestMapping(method = RequestMethod.POST,params = {"pseudo","name","lastname","pass","email","address","typeuser"} )
+    public @ResponseBody ResponseEntity<?> addUser(
+            @RequestParam(value ="pseudo") String pseudo,
+            @RequestParam(value ="name") String name,
+            @RequestParam(value ="lastname") String lastname,
+            @RequestParam(value ="pass") String password,
+            @RequestParam(value ="email") String email,
+            @RequestParam(value ="address") String address,
+            @RequestParam(value ="typeuser") int typeuser)
+    {
         try{
-            return new ResponseEntity<>(UserRepo.findOne(idbar),HttpStatus.OK);
+            Type_User type = TypeUserRepo.findOne(typeuser);
+            User newuser = new User(pseudo,password,name,lastname,address,email,type);
+            return new ResponseEntity<>(UserRepo.save(newuser),HttpStatus.OK);
         }
         catch (Exception e)
         {
@@ -52,11 +69,31 @@ public class UserController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{idbar}")
-    public @ResponseBody ResponseEntity<?> delBar(@PathVariable String idbar) {
+    @RequestMapping(method = RequestMethod.GET,params = {"pseudo","pass"} )
+    public @ResponseBody ResponseEntity<?> getUserWithIdAndPass(
+            @RequestParam(value ="pseudo") String pseudo,
+            @RequestParam(value ="pass") String password)
+    {
+        try{
+            User usertry = UserRepo.findByPseudo(pseudo);
+            if(usertry.getPassword() == password)
+                return new ResponseEntity<>(usertry, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE,params = {"iduser"} )
+    public @ResponseBody ResponseEntity<?> DeleteUser(
+            @RequestParam(value="iduser") int iduser)
+    {
         ResponseEntity<String> response = null;
-        try {
-            UserRepo.delete(idbar);
+        try{
+            UserRepo.delete(iduser);
             response = new ResponseEntity<String>(HttpStatus.GONE);
         }catch (Exception e){
             response= new ResponseEntity<String>(HttpStatus.FORBIDDEN);
@@ -64,10 +101,10 @@ public class UserController {
         return  response;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{idbar}/beers")
-    public @ResponseBody ResponseEntity<?> getBeersWithBarId(@PathVariable String idbar) {
+    @RequestMapping(method = RequestMethod.GET, value = "/{idUser}/commentaries")
+    public @ResponseBody ResponseEntity<?> getCommentsFromUser(@PathVariable int idUser) {
         try{
-            return new ResponseEntity<>(UserRepo.findOne(idbar).getBeers(),HttpStatus.OK);
+            return new ResponseEntity<>(UserRepo.findOne(idUser).getCommentaries(),HttpStatus.OK);
         }
         catch (Exception e)
         {
@@ -75,24 +112,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/terrasse")
-    public @ResponseBody ResponseEntity<?> getBarsWithTerrasse() {
-        try{
-            List<Bar> lstBarTerrasse = new ArrayList<>();
-
-            for (Bar lebar: UserRepo.findAll())
-            {
-                if (lebar.isTerrasse())
-                    lstBarTerrasse.add(lebar);
-            }
-            return new ResponseEntity<>(lstBarTerrasse,HttpStatus.OK);
-        }
-        catch (Exception e)
-        {
-            return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
-        }
-    }
-
+/*
     @RequestMapping(method = RequestMethod.GET, value ="/barplaces")
     public ResponseEntity<?> getAllPlaces() {
 
@@ -162,4 +182,5 @@ public class UserController {
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }
+    */
 }

@@ -20,6 +20,9 @@ public class User {
     @Column(name = "pseudo")
     private String pseudo;
     @NotNull
+    @Column(name = "password")
+    private String password;
+    @NotNull
     @Column(name = "name")
     private String name;
     @NotNull
@@ -44,5 +47,88 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Commentary> commentaries;
 
+    public User() {
+    }
 
+    public User(String pseudo, String password, String name, String lastname, String address, String email, Type_User type_user) {
+        this.pseudo = pseudo;
+        this.password = password;
+        this.name = name;
+        this.lastname = lastname;
+        this.address = address;
+        this.email = email;
+        this.type_user = type_user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
+    }
+
+    public Type_User getType_user() {
+        return type_user;
+    }
+
+    public void setType_user(Type_User type_user) {
+        this.type_user = type_user;
+    }
+
+    public List<Commentary> getCommentaries() {
+        return commentaries;
+    }
+
+    public void setCommentaries(List<Commentary> commentaries) {
+        this.commentaries = commentaries;
+    }
 }

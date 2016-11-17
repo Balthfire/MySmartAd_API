@@ -26,7 +26,7 @@ public class Commentary {
     private User user;
     @ManyToOne
     @JoinColumn(name = "id_ad")
-    private User ad;
+    private Advertisement ad;
     @ManyToOne
     @JoinColumn(name = "id_place")
     private Place place;
